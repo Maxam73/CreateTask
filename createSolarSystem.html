@@ -1,0 +1,233 @@
+<html>
+  <head>
+<script>
+var guide = []; // they add their plan here
+var distance = 0;
+var index = 0;
+
+planets = ['mercury','venus','earth','mars','jupiter','saturn','uranus','neptune'];
+var planetslist = []; // This is for after they choose the plan, it puts the planets they choose
+                      // in order from distance to earth so it is easier to get the distances between
+
+
+
+var planetDistances = {
+'mercury':-0.61,
+'venus': -0.28,
+'earth':0,
+'mars':0.52,
+'jupiter':4.2,
+'saturn':8.52,
+'uranus':18.21,
+'neptune':29.09
+}
+
+
+function jupiterD(){
+
+  planetslist[index] = 'jupiter';
+  index++;
+
+}
+
+function saturnD(){
+  planetslist[index] = 'saturn';
+  index++;
+
+}
+
+function neptuneD(){
+  planetslist[index] = 'neptune';
+  index++;
+}
+
+function marsD(){
+ planetslist[index] = 'mars';
+  index++;
+}
+
+function venusD(){
+  planetslist[index] = 'venus';
+  index++;
+}
+
+function uranusD(){
+  planetslist[index] ='uranus';
+  index++;
+}
+
+function mercuryD(){
+  planetslist[index] = 'mercury';
+  index++;
+}
+
+
+//returns distance between planet 1 and planet 2 in AU
+function calculateDistance(planet1, planet2){
+//puts the planets in order according to how they are in the solar system
+//and finds the distance between them
+    i1 = planets.indexOf(planet1)
+
+    i2 = planets.indexOf(planet2)
+  var  start = 0;
+    var end = 0;
+    var counter = 0;
+    if(i1>i2)
+    {
+        return planetDistances[planet1] - planetDistances[planet2]
+    }
+    else if (i1<i2)
+    {
+        return planetDistances[planet2] - planetDistances[planet1]
+    }
+    else
+     {
+       return 0;
+     }
+}
+function tripDistance(planetsList){
+    totalDistance = 0;
+    for(var i = 0; i < planetslist.length-1;i++){
+    //get planet i from chosenPlanets list
+        planet1 = planetslist[i];
+        planet2 = planetslist[i + 1];
+
+        totalDistance +=  calculateDistance(planet1,planet2);
+
+    //get distance to next planet
+    //add distance to counter
+    }
+
+    return totalDistance;
+}
+
+function tripTime(planetsList){
+  var speedoflight = 7.21436;
+  distance = tripDistance(planetsList);
+  time = distance/speedoflight;
+  return time;
+}
+
+
+function singleDistance(planetsList){
+    totalDistance = 0;
+
+    for(var i = 0; i < planetslist.length-1;i++){
+    //get planet i from chosenPlanets list
+
+        planet1 = planetslist[i];
+        planet2 = planetslist[i + 1];
+
+        var sDistance = calculateDistance(planet1,planet2);
+
+
+
+
+          var speedoflight2 = 7.21436;
+          distance = sDistance;
+          time = sDistance/speedoflight2;
+
+          console.log(planet1);
+            console.log(planet2);
+          var single = " ";
+        single = "" + planet1 + "  -->  " + planet2 +"<br>" + "Distance traveled = " + (sDistance * 92955807)+ " miles (" + sDistance + " au)"+ "<br>" + "Time to Travel = "+ time +" hours" +"<br>"+ "<br>";
+      var finishDistance = finishDistance + single;
+
+
+    //get distance to next planet
+    //add distance to counter
+    }
+
+    return finishDistance;
+}
+
+
+
+function done(){
+  document.getElementById("final").style.visibility = "visible";
+  var time1 = tripTime(planetslist);
+  var Distance = tripDistance(planetslist);
+  var concat = singleDistance(planetslist);
+
+    document.getElementById("output1").innerHTML = "Total Distance Traveled = " + Distance*92955807 + " miles (" + Distance + " au)";
+    document.getElementById("output2").innerHTML = "Total travel time = "+ time1 + " hours";
+    document.getElementById("output3").innerHTML = "Step by Step Guide: "+ "<br>" + concat;
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+function hide2()
+{
+  document.getElementById("final").style.visibility = "hidden";
+}
+
+
+</script>
+
+
+<style>
+</style>
+  </head>
+
+
+<body onload = hide2()>
+  <center>
+  <h1 id = "a">Welcome, to the Universe...</h1>
+  <h2 id = "b"> This is your Guide to Traverse the Galaxy at the Speed of Light</h2>
+  <h2 id = "c"> Please select the plaents you would like to visit! </h2>
+  <p></p>
+
+
+
+
+
+
+
+<p> select the planets you want to visit (in order!)</p>
+<input type = "button" value = "mercury" onclick = "mercuryD()" id = "pl6">
+<input type = "button" value = "venus" onclick = "venusD()" id = "pl4">
+<input type = "button" value = "mars" onclick = "marsD()" id = "pl3">
+<input type = "button" value = "jupiter" onclick = "jupiterD()" id = "pl1">
+<input type = "button" value = "saturn" onclick = "saturnD()" id = "pl2">
+<input type = "button" value = "uranus" onclick = "uranusD()" id = "pl5">
+<input type = "button" value = "neptune" onclick = "neptuneD()" id = "pl3">
+
+<br></br>
+
+
+<hr><br></br></hr>
+<input type = "button" value = "DONE" onclick = "done()" id = "DNE">
+<h3 id = "final">Here is your Trip...</h3>
+<span id = "output"></span>
+
+
+
+<br></br>
+<br></br>
+
+  <span id = "output1"></span>
+  <br>
+
+  <span id = "output2"></span>
+  <br>
+  <br>
+  <span id = "output3"></span>
+<br>
+
+
+</center>
+
+</body>
+
+</html>
